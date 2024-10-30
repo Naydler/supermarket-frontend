@@ -19,7 +19,7 @@ const BASE_URL = 'http://127.0.0.1:8000/product';
 
 export const getAllProducts = async (): Promise<Product[]> => {
     try {
-        const response = await fetch(`${BASE_URL}/create/`);
+        const response = await fetch(`${BASE_URL}/getallproducts/`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -30,3 +30,4 @@ export const getAllProducts = async (): Promise<Product[]> => {
         throw error;
     }
 };
+

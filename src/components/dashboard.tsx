@@ -24,7 +24,8 @@ import {
     InboxOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { getAllProducts, Product } from "../api/products"; // Asegúrate de que la ruta es correcta
+import { getAllProducts, Product } from "../api/products"; 
+import ProductDashboard from "./productDashboard";
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -123,6 +124,7 @@ const data = [
 export default function Dashboard() {
     const [collapsed, setCollapsed] = useState(false);
     const [inventoryValue, setInventoryValue] = useState<number>(0);
+    const [selectedMenuKey, setSelectedMenuKey] = useState("1");
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -162,6 +164,7 @@ export default function Dashboard() {
                     defaultSelectedKeys={["1"]}
                     mode="inline"
                     items={items}
+                    onClick={(e) => setSelectedMenuKey(e.key)}
                 />
             </Sider>
             <Layout className="site-layout">
@@ -185,51 +188,56 @@ export default function Dashboard() {
                 </Header>
                 <Content style={{ margin: "0 16px" }}>
                     <div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
-                        <Title level={2}>Dashboard</Title>
-                        <Row gutter={16} style={{ marginBottom: 24 }}>
-                            <Col span={6}>
-                                <Card>
-                                    <Statistic
-                                        title="Total Revenue"
-                                        value={45231.89}
-                                        precision={2}
-                                        valueStyle={{ color: "#3f8600" }}
-                                        prefix={<DollarOutlined />}
-                                        suffix="USD"
-                                    />
-                                </Card>
-                            </Col>
-                            <Col span={6}>
-                                <Card>
-                                    <Statistic
-                                        title="Sales"
-                                        value={2350}
-                                        valueStyle={{ color: "#cf1322" }}
-                                        prefix={<ShoppingOutlined />}
-                                    />
-                                </Card>
-                            </Col>
-                            <Col span={6}>
-                                <Card>
-                                    <Statistic
-                                        title="Active Users"
-                                        value={573}
-                                        prefix={<TeamOutlined />}
-                                    />
-                                </Card>
-                            </Col>
-                            <Col span={6}>
-                                <Card>
-                                    <Statistic
-                                        title="Inventory"
-                                        value={inventoryValue} // Aquí se muestra el valor del inventario
-                                        prefix={<InboxOutlined />}
-                                    />
-                                </Card>
-                            </Col>
-                        </Row>
-                        <Title level={3}>Recent Orders</Title>
-                        <Table columns={columns} dataSource={data} />
+                        {selectedMenuKey === "1" && (
+                            <>
+                                <Title level={2}>Dashboard</Title>
+                                <Row gutter={16} style={{ marginBottom: 24 }}>
+                                    <Col span={6}>
+                                        <Card>
+                                            <Statistic
+                                                title="Total Revenue"
+                                                value={45231.89}
+                                                precision={2}
+                                                valueStyle={{ color: "#3f8600" }}
+                                                prefix={<DollarOutlined />}
+                                                suffix="USD"
+                                            />
+                                        </Card>
+                                    </Col>
+                                    <Col span={6}>
+                                        <Card>
+                                            <Statistic
+                                                title="Sales"
+                                                value={2350}
+                                                valueStyle={{ color: "#cf1322" }}
+                                                prefix={<ShoppingOutlined />}
+                                            />
+                                        </Card>
+                                    </Col>
+                                    <Col span={6}>
+                                        <Card>
+                                            <Statistic
+                                                title="Active Users"
+                                                value={573}
+                                                prefix={<TeamOutlined />}
+                                            />
+                                        </Card>
+                                    </Col>
+                                    <Col span={6}>
+                                        <Card>
+                                            <Statistic
+                                                title="Inventory"
+                                                value={inventoryValue} // Aquí se muestra el valor del inventario
+                                                prefix={<InboxOutlined />}
+                                            />
+                                        </Card>
+                                    </Col>
+                                </Row>
+                                <Title level={3}>Recent Orders</Title>
+                                <Table columns={columns} dataSource={data} />
+                            </>
+                        )}
+                        {selectedMenuKey === "2" && <ProductDashboard />} {/* Dashboard de productos */}
                     </div>
                 </Content>
             </Layout>
