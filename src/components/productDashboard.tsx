@@ -146,16 +146,20 @@ export default function ProductDashboard() {
             title: "Price of buy",
             dataIndex: "price_of_buy",
             key: "price_of_buy",
+            sorter: (a: Product, b: Product) => a.price_of_buy - b.price_of_buy,
+
         },
         {
             title: "Price of sell",
             dataIndex: "price_of_sell",
             key: "price_of_sell",
+            sorter: (a: Product, b: Product) => a.price_of_sell - b.price_of_sell,
         },
         {
             title: "Stock",
             dataIndex: "stock",
             key: "stock",
+            sorter: (a: Product, b: Product) => a.stock - b.stock,
         },
         {
             title: "EAN",
