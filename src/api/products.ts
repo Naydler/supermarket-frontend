@@ -31,3 +31,44 @@ export const getAllProducts = async (): Promise<Product[]> => {
     }
 };
 
+export const createProduct = async (product: Product): Promise<Product> => {
+    try {
+        console.log('product:', product);
+        const response = await fetch(`${BASE_URL}/create/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data: Product = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+    }
+}
+
+export const updateProduct = async (product: Product): Promise<Product> => {
+    try {
+        const response = await fetch(`${BASE_URL}/update/${product.id}/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data: Product = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error updating product:', error);
+        throw error;
+    }
+}
+
