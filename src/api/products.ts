@@ -10,7 +10,7 @@ export interface Product {
     stock_warning: number; 
     stock: number; 
     date: string; 
-    image: string;
+    image?: string;
     ivaCategoryId: number;
     id_supplier: number;
 }

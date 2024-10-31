@@ -1,11 +1,13 @@
 import { Card, Table, Typography, Button, Row, Col, Modal, Form, Input, InputNumber, Select } from "antd";
 import { useEffect, useState } from "react";
 import { createProduct, getAllProducts, Product, updateProduct } from "../api/products";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, QuestionOutlined } from "@ant-design/icons";
 import { getAllSuppliers, OptionSupplier } from "../api/supplier";
 import { getAllIvaCategoryOptions, OptionivaCategory } from "../api/ivaCategory";
 import { getAllCompanyOptions, OptionCompany } from "../api/Company";
+import { ColumnType, FilterDropdownProps, Key } from 'antd/es/table/interface';
 const { Title } = Typography;
+const { Search } = Input;
 
 export default function ProductDashboard() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -107,16 +109,38 @@ export default function ProductDashboard() {
         setIsModalVisible(false);
     };
 
-    const columns = [
+    const columns: ColumnType<Product>[] = [
         {
-            image: "Image",
+            title: "Image",
             dataIndex: "image",
             key: "image",
+            render: (text: string) => (
+                text ? (
+                    <img src={text} alt="Product" style={{ width: '50px', height: '50px' }} />
+                ) : (
+                    <QuestionOutlined style={{ fontSize: '50px' }} />
+                )
+            ),
         },
         {
             title: "Product Name",
             dataIndex: "name",
             key: "name",
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: FilterDropdownProps) => (
+                <div style={{ padding: 8 }}>
+                    <Search
+                        placeholder="Search Product"
+                        enterButton
+                        onSearch={(value) => {
+                            setSelectedKeys(value ? [value] : []);
+                            confirm();
+                        }}
+                        style={{ marginBottom: 8, display: 'block' }}
+                    />
+                </div>
+            ),
+            onFilter: (value: string | number | boolean | Key, record: Product) =>
+                record.name.toLowerCase().includes((value as string).toLowerCase()),
         },
         {
             title: "Price of buy",
