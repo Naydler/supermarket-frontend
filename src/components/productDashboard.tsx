@@ -28,7 +28,7 @@ export default function ProductDashboard() {
             console.error("Error fetching products:", error);
         }
     };
-    
+
     const fetchOffers = async (productId: number) => {
         try {
             const offer = await getOffer(productId);
@@ -216,18 +216,6 @@ export default function ProductDashboard() {
             ),
         },
         {
-            
-            title: "",
-            key: "Offer",
-            render: (text: string, record: Product) => (
-                <Button 
-
-                    icon={<PlusOutlined />} 
-                    onClick={() => handleCreateOffer(record)} 
-                />
-            ),
-        },
-        {
             title: "",
             key: "edit",
             render: (text: string, record: Product) => (
@@ -314,8 +302,11 @@ export default function ProductDashboard() {
                             placeholder="Select Company"
                         />
                     </Form.Item>  
-                </Form>
+                </Form>     
             </Modal>
+            
         </div>
+        
+        
     );
 }

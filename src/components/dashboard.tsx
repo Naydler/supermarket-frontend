@@ -22,10 +22,13 @@ import {
     ShoppingOutlined,
     TeamOutlined,
     InboxOutlined,
+    BankOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { getAllProducts, Product } from "../api/products"; 
 import ProductDashboard from "./productDashboard";
+import CustomerDashboard from "./customerDashboard";
+import AnaliticDashboard from "./analiticDashboard";
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -49,8 +52,10 @@ function getItem(
 const items: MenuItem[] = [
     getItem("Dashboard", "1", <DashboardOutlined />),
     getItem("Products", "2", <ShoppingCartOutlined />),
-    getItem("Customers", "3", <UserOutlined />),
-    getItem("Analytics", "4", <BarChartOutlined />),
+    getItem("Employee", "3", <UserOutlined />),
+    getItem("Supplier", "4", <ShoppingOutlined />),
+    getItem("Shops", "5", <ShoppingCartOutlined/>),
+    getItem("Analytics", "6", <BarChartOutlined />),
 ];
 
 const columns = [
@@ -238,6 +243,10 @@ export default function Dashboard() {
                             </>
                         )}
                         {selectedMenuKey === "2" && <ProductDashboard />} {/* Dashboard de productos */}
+                        {selectedMenuKey === "3" && <CustomerDashboard />} {/* Dashboard de productos */}
+                        {selectedMenuKey === "6" && <AnaliticDashboard />} {/* Dashboard de productos */}
+
+                        
                     </div>
                 </Content>
             </Layout>
