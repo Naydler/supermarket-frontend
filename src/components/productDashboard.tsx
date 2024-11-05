@@ -1,11 +1,12 @@
-import { Card, Table, Typography, Button, Row, Col, Modal, Form, Input, InputNumber, Select } from "antd";
+import { Card, Table, Typography, Button, Row, Col, Modal, Form, Input, InputNumber, Select, Badge } from "antd";
 import { useEffect, useState } from "react";
 import { createProduct, getAllProducts, Product, updateProduct } from "../api/products";
-import { DeleteOutlined, EditOutlined, QuestionOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, QuestionOutlined, PlusOutlined } from "@ant-design/icons";
 import { getAllSuppliers, OptionSupplier } from "../api/supplier";
 import { getAllIvaCategoryOptions, OptionivaCategory } from "../api/ivaCategory";
-import { getAllCompanyOptions, OptionCompany } from "../api/Company";
+import { getAllCompanyOptions, OptionCompany } from "../api/company";
 import { ColumnType, FilterDropdownProps, Key } from 'antd/es/table/interface';
+import { getOffer } from "../api/offer";
 const { Title } = Typography;
 const { Search } = Input;
 
@@ -14,6 +15,7 @@ export default function ProductDashboard() {
     const [suppliers, setSuppliers] = useState<OptionSupplier[]>([]);
     const [IvaCategory, setIvaCategory] = useState<OptionivaCategory[]>([]);
     const [company, setCompany] = useState<OptionCompany[]>([]);
+    const [offers, setOffers] = useState<{ [key: number]: boolean }>({});
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [form] = Form.useForm();
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -24,6 +26,15 @@ export default function ProductDashboard() {
             setProducts(productsData);
         } catch (error) {
             console.error("Error fetching products:", error);
+        }
+    };
+    
+    const fetchOffers = async (productId: number) => {
+        try {
+            const offer = await getOffer(productId);
+            setOffers((prev) => ({ ...prev, [productId]: offer !== null }));
+        } catch (error) {
+            console.error(`Error fetching offer for product ${productId}:`, error);
         }
     };
 
@@ -66,6 +77,14 @@ export default function ProductDashboard() {
         fetchSuppliers();
     }, []);
 
+   
+
+    useEffect(() => {
+        products.forEach((product) => {
+            fetchOffers(product.id);
+        });
+    }, [products]);
+
     
 
     const handleAddProduct = () => {
@@ -88,6 +107,14 @@ export default function ProductDashboard() {
             console.error("Error deleting product:", error);
         }
     };
+
+    const handleCreateOffer = async (id: Product) => {
+        try {
+          
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
+    }
 
     const handleOk = async () => {
         const values = await form.validateFields();
@@ -175,6 +202,30 @@ export default function ProductDashboard() {
             title: "Date",
             dataIndex: "date",
             key: "date",
+        },
+        {
+            title: "Offer Status",
+            key: "offerStatus",
+            render: (text: string, record: Product) => (
+                <>
+                    <Badge
+                        color={offers[record.id] ? "green" : "red"}
+                        text={offers[record.id] ? "Active" : "Inactive"}
+                    />
+                </>
+            ),
+        },
+        {
+            
+            title: "",
+            key: "Offer",
+            render: (text: string, record: Product) => (
+                <Button 
+
+                    icon={<PlusOutlined />} 
+                    onClick={() => handleCreateOffer(record)} 
+                />
+            ),
         },
         {
             title: "",
