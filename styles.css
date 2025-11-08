@@ -7,3 +7,13 @@
     color: #00213F;
     /* Color principal de la app */
 }
+
+.app-secondarybg-color {
+    background: #1777FF;
+    /* Color principal de la app */
+}
+
+.app-secondary-color {
+    color: #1777FF;
+    /* Color principal de la app */
+}

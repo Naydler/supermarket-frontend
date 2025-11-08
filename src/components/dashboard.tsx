@@ -1,10 +1,10 @@
-import { BarChartOutlined, BellOutlined, CalendarOutlined, DashboardOutlined, FileTextOutlined, SearchOutlined, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
+import { BarChartOutlined, BellOutlined, CalendarOutlined, DashboardOutlined, FileTextOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Avatar, Card, Col, Input, Layout, List, Menu, Row, Statistic, Table, Typography } from "antd";
 import React, { useState } from "react";
 import '../../styles.css';
 import AnaliticDashboard from "./analiticDashboard";
-import CustomerDashboard from "./customerDashboard";
+import CustomerDashboard from "./appointmentsCalendar";
 import ProductDashboard from "./productDashboard";
 
 const { Header, Sider, Content } = Layout;
@@ -57,7 +57,7 @@ export default function Dashboard() {
     // }, []);
 
     return (
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout style={{ minHeight: "100h", margin: -10 }}>
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div style={{
                     display: "flex",
@@ -79,7 +79,12 @@ export default function Dashboard() {
                 />
             </Sider>
             <Layout className="site-layout">
-                <Header style={{ padding: 0, background: "#fff" }}>
+                <Header style={{
+                    background: "#fff",
+                    padding: "0 24px",
+                    margin: "16px 16px 0 16px",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+                }}>
                     <Row justify="space-between" align="middle" style={{ height: "100%", padding: "0 24px" }}>
                         <Col>
                             <Input placeholder="Search..." prefix={<SearchOutlined />}
@@ -91,11 +96,17 @@ export default function Dashboard() {
                         </Col>
                     </Row>
                 </Header>
-                <Content style={{ margin: "0 16px" }}>
+                <Content style={{
+                    margin: "16px",
+                    padding: "24px",
+                    background: "#fff",
+                    minHeight: "calc(100vh - 64px)", // 64px = altura aproximada del Header
+                    overflow: "auto",
+                }}>
                     <div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
                         {selectedMenuKey === "1" && (
                             <>
-                                <Title level={2}>Doctor Dashboard</Title>
+                                <Title level={2}>Dashboard</Title>
                                 <Row gutter={16} style={{ marginBottom: 24 }}>
                                     <Col span={6}>
                                         <Card>
@@ -111,7 +122,6 @@ export default function Dashboard() {
                                             <Statistic
                                                 title="Patients Waiting"
                                                 value={3}
-                                                prefix={<ShoppingOutlined />}
                                                 valueStyle={{ color: "#faad14" }}
                                             />
                                         </Card>

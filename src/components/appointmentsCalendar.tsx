@@ -1,4 +1,4 @@
-import { Badge, Calendar, Modal, Select, Typography } from "antd";
+import { Badge, Button, Calendar, Modal, Select, Typography } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import localeData from "dayjs/plugin/localeData";
 import { useState } from "react";
@@ -77,7 +77,7 @@ const AppointmentsDashboard = () => {
 
     return (
         <div style={{ background: "#fff", padding: 24, borderRadius: 8 }}>
-            <Title level={2}>Appointments Calendar</Title>
+            <Title level={2}>Calendar</Title>
 
             {/* Navegación de mes + selectores */}
             <div
@@ -89,9 +89,9 @@ const AppointmentsDashboard = () => {
                     marginBottom: 16,
                 }}
             >
-                <button onClick={prevMonth} style={{ cursor: "pointer" }}>
+                <Button onClick={prevMonth} style={{ cursor: "pointer" }}>
                     &lt;
-                </button>
+                </Button>
 
                 <Select value={currentMonth} onChange={onMonthChange} style={{ width: 120 }}>
                     {months.map((m, i) => (
@@ -109,9 +109,9 @@ const AppointmentsDashboard = () => {
                     ))}
                 </Select>
 
-                <button onClick={nextMonth} style={{ cursor: "pointer" }}>
+                <Button onClick={nextMonth} style={{ cursor: "pointer" }}>
                     &gt;
-                </button>
+                </Button>
             </div>
 
             <Calendar
