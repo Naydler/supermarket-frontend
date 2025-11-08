@@ -1,34 +1,11 @@
-import React, { useEffect, useState } from "react";
-import {
-    Layout,
-    Menu,
-    Input,
-    Avatar,
-    Card,
-    Table,
-    Tag,
-    Typography,
-    Row,
-    Col,
-    Statistic,
-} from "antd";
-import {
-    DashboardOutlined,
-    ShoppingCartOutlined,
-    UserOutlined,
-    BarChartOutlined,
-    SearchOutlined,
-    DollarOutlined,
-    ShoppingOutlined,
-    TeamOutlined,
-    InboxOutlined,
-    BankOutlined,
-} from "@ant-design/icons";
+import { BarChartOutlined, BellOutlined, CalendarOutlined, DashboardOutlined, FileTextOutlined, SearchOutlined, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { getAllProducts, Product } from "../api/products"; 
-import ProductDashboard from "./productDashboard";
-import CustomerDashboard from "./customerDashboard";
+import { Avatar, Card, Col, Input, Layout, List, Menu, Row, Statistic, Table, Typography } from "antd";
+import React, { useState } from "react";
+import '../../styles.css';
 import AnaliticDashboard from "./analiticDashboard";
+import CustomerDashboard from "./customerDashboard";
+import ProductDashboard from "./productDashboard";
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -41,129 +18,58 @@ function getItem(
     icon?: React.ReactNode,
     children?: MenuItem[]
 ): MenuItem {
-    return {
-        key,
-        icon,
-        children,
-        label,
-    } as MenuItem;
+    return { key, icon, children, label, } as MenuItem;
 }
 
 const items: MenuItem[] = [
     getItem("Dashboard", "1", <DashboardOutlined />),
-    getItem("Products", "2", <ShoppingCartOutlined />),
-    getItem("Employee", "3", <UserOutlined />),
-    getItem("Supplier", "4", <ShoppingOutlined />),
-    getItem("Shops", "5", <ShoppingCartOutlined/>),
+    getItem("Patients", "2", <UserOutlined />),
+    getItem("Appointments", "3", <CalendarOutlined />),
+    getItem("Medical Records", "4", <FileTextOutlined />),
+    getItem("Tasks & Reminders", "5", <BellOutlined />),
     getItem("Analytics", "6", <BarChartOutlined />),
 ];
 
-const columns = [
-    {
-        title: "Order",
-        dataIndex: "order",
-        key: "order",
-    },
-    {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
-        render: (status: string) => {
-            let color =
-                status === "completed"
-                    ? "green"
-                    : status === "pending"
-                        ? "geekblue"
-                        : "volcano";
-            return (
-                <Tag color={color} key={status}>
-                    {status.toUpperCase()}
-                </Tag>
-            );
-        },
-    },
-    {
-        title: "Customer",
-        dataIndex: "customer",
-        key: "customer",
-    },
-    {
-        title: "Product",
-        dataIndex: "product",
-        key: "product",
-    },
-    {
-        title: "Amount",
-        dataIndex: "amount",
-        key: "amount",
-    },
-];
 
-const data = [
-    {
-        key: "1",
-        order: "#001",
-        status: "completed",
-        customer: "John Doe",
-        product: "Product A",
-        amount: "$250.00",
-    },
-    {
-        key: "2",
-        order: "#002",
-        status: "pending",
-        customer: "Jane Smith",
-        product: "Product B",
-        amount: "$150.00",
-    },
-    {
-        key: "3",
-        order: "#003",
-        status: "cancelled",
-        customer: "Bob Johnson",
-        product: "Product C",
-        amount: "$350.00",
-    },
-];
+
 
 export default function Dashboard() {
     const [collapsed, setCollapsed] = useState(false);
-    const [inventoryValue, setInventoryValue] = useState<number>(0);
     const [selectedMenuKey, setSelectedMenuKey] = useState("1");
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const products: Product[] = await getAllProducts();
-                console.log("Fetched Products:", products); // Log de los productos
-                const totalStock = products.reduce(
-                    (acc, product) => acc + Number(product.stock),
-                    0
-                ); // Convierte stock a número
-                console.log("Total Stock:", totalStock); // Log del total de stock
-                setInventoryValue(totalStock);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchProducts = async () => {
+    //         try {
+    //             const products: Product[] = await getAllProducts();
+    //             console.log("Fetched Products:", products); // Log de los productos
+    //             const totalStock = products.reduce(
+    //                 (acc, product) => acc + Number(product.stock),
+    //                 0
+    //             ); // Convierte stock a número
+    //             console.log("Total Stock:", totalStock); // Log del total de stock
+    //             setInventoryValue(totalStock);
+    //         } catch (error) {
+    //             console.error("Error fetching products:", error);
+    //         }
+    //     };
 
-        fetchProducts();
-    }, []);
+    //     fetchProducts();
+    // }, []);
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <Sider
-                collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
-            >
-                <div
-                    style={{
-                        height: 32,
-                        margin: 16,
-                        background: "rgba(255, 255, 255, 0.2)",
-                    }}
-                />
+            <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}>
+                    <img
+                        src="logo.png"
+                        alt="Logo"
+                        style={{ maxHeight: "100%", maxWidth: "100%" }}
+                    />
+                </div>
                 <Menu
                     theme="dark"
                     defaultSelectedKeys={["1"]}
@@ -174,15 +80,9 @@ export default function Dashboard() {
             </Sider>
             <Layout className="site-layout">
                 <Header style={{ padding: 0, background: "#fff" }}>
-                    <Row
-                        justify="space-between"
-                        align="middle"
-                        style={{ height: "100%", padding: "0 24px" }}
-                    >
+                    <Row justify="space-between" align="middle" style={{ height: "100%", padding: "0 24px" }}>
                         <Col>
-                            <Input
-                                placeholder="Search..."
-                                prefix={<SearchOutlined />}
+                            <Input placeholder="Search..." prefix={<SearchOutlined />}
                                 style={{ width: 200 }}
                             />
                         </Col>
@@ -195,60 +95,95 @@ export default function Dashboard() {
                     <div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
                         {selectedMenuKey === "1" && (
                             <>
-                                <Title level={2}>Dashboard</Title>
+                                <Title level={2}>Doctor Dashboard</Title>
                                 <Row gutter={16} style={{ marginBottom: 24 }}>
                                     <Col span={6}>
                                         <Card>
                                             <Statistic
-                                                title="Total Revenue"
-                                                value={45231.89}
-                                                precision={2}
-                                                valueStyle={{ color: "#3f8600" }}
-                                                prefix={<DollarOutlined />}
-                                                suffix="USD"
+                                                title="Appointments Today"
+                                                value={12}
+                                            // prefix={<DollarOutlined />}
                                             />
                                         </Card>
                                     </Col>
                                     <Col span={6}>
                                         <Card>
                                             <Statistic
-                                                title="Sales"
-                                                value={2350}
-                                                valueStyle={{ color: "#cf1322" }}
+                                                title="Patients Waiting"
+                                                value={3}
                                                 prefix={<ShoppingOutlined />}
+                                                valueStyle={{ color: "#faad14" }}
                                             />
                                         </Card>
                                     </Col>
                                     <Col span={6}>
                                         <Card>
                                             <Statistic
-                                                title="Active Users"
-                                                value={573}
-                                                prefix={<TeamOutlined />}
+                                                title="Appointments Completed"
+                                                value={9}
+                                                // prefix={<TeamOutlined />}
+                                                valueStyle={{ color: "#3f8600" }}
                                             />
                                         </Card>
                                     </Col>
                                     <Col span={6}>
                                         <Card>
                                             <Statistic
-                                                title="Inventory"
-                                                value={inventoryValue} // Aquí se muestra el valor del inventario
-                                                prefix={<InboxOutlined />}
+                                                title="Next Appointment"
+                                                value="15:30"
+                                                prefix={<UserOutlined />}
                                             />
                                         </Card>
                                     </Col>
                                 </Row>
-                                <Title level={3}>Recent Orders</Title>
-                                <Table columns={columns} dataSource={data} />
+
+                                <Title level={3}>Upcoming Appointments</Title>
+                                <Table
+                                    columns={[
+                                        { title: "Patient", dataIndex: "patient", key: "patient" },
+                                        { title: "Time", dataIndex: "time", key: "time" },
+                                        { title: "Reason", dataIndex: "reason", key: "reason" },
+                                        { title: "Status", dataIndex: "status", key: "status" },
+                                    ]}
+                                    dataSource={[
+                                        {
+                                            key: 1,
+                                            patient: "John Smith",
+                                            time: "14:00",
+                                            reason: "General Consultation",
+                                            status: "In Progress",
+                                        },
+                                        {
+                                            key: 2,
+                                            patient: "Laura Gomez",
+                                            time: "15:30",
+                                            reason: "Routine Check-up",
+                                            status: "Pending",
+                                        },
+                                    ]}
+                                />
+
+                                <Title level={3} style={{ marginTop: 32 }}>
+                                    Recent Notes
+                                </Title>
+                                <List
+                                    dataSource={[
+                                        "Update John Smith’s medical record",
+                                        "Review Laura Gomez’s lab results",
+                                        "Confirm next visit for Peter Ruiz",
+                                    ]}
+                                    renderItem={(item) => <List.Item>{item}</List.Item>}
+                                />
                             </>
                         )}
                         {selectedMenuKey === "2" && <ProductDashboard />} {/* Dashboard de productos */}
                         {selectedMenuKey === "3" && <CustomerDashboard />} {/* Dashboard de productos */}
                         {selectedMenuKey === "6" && <AnaliticDashboard />} {/* Dashboard de productos */}
 
-                        
+
                     </div>
                 </Content>
+
             </Layout>
         </Layout>
     );
