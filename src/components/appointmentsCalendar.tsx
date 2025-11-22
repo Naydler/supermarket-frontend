@@ -53,8 +53,8 @@ const AppointmentsDashboard = () => {
     const onYearChange = (year: number) => {
         const newDate = selectedDate.year(year);
         setSelectedDate(newDate);
-        const months = dayjs.monthsShort();
     };
+
 
     const months = dayjs.months();
     const years = Array.from({ length: 10 }, (_, i) => dayjs().year() - 5 + i);

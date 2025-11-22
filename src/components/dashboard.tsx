@@ -5,6 +5,7 @@ import "../../styles.css";
 import AppoitmentCalendar from "./appointmentsCalendar";
 import ReportsAndResults from "./reportAndResults";
 import VaccinesDashboard from "./VaccinesDashboard";
+import EQuery from "../modules/eQuery";
 
 
 const { Header, Sider, Content } = Layout;
@@ -194,10 +195,10 @@ export default function PatientDashboard() {
                         </>
                     )}
 
-                    {selectedMenuKey === "2" && < ReportsAndResults />}
+                    {selectedMenuKey === "2" && <ReportsAndResults />}
                     {selectedMenuKey === "3" && <VaccinesDashboard />}
                     {selectedMenuKey === "4" && <p>Medication details</p>}
-                    {selectedMenuKey === "5" && <p>E-query (messages or questions)</p>}
+                    {selectedMenuKey === "5" && <EQuery />}
                     {selectedMenuKey === "6" && <AppoitmentCalendar />}
                     {selectedMenuKey === "7" && <p>Diagnoses and medical history</p>}
                 </Content>

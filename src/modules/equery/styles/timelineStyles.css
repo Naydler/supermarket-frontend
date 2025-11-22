@@ -1,0 +1,42 @@
+.timeline {
+  position: relative;
+  margin: 20px 0;
+  padding: 20px 0;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: #e0e0e0;
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 10px 20px;
+}
+
+.timeline-item.left {
+  left: 0;
+  text-align: right;
+}
+
+.timeline-item.right {
+  left: 50%;
+}
+
+.timeline-content {
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid #1890ff;
+  animation: fadeInMove .6s ease;
+}
+
+@keyframes fadeInMove {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
